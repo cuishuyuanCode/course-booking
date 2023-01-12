@@ -37,7 +37,7 @@
         <property name="dataSource" ref="dataSource"/>
 
         <!-- 配置mapper文件位置，扫描映射文件 -->
-        <property name="mapperLocations" value="classpath:mappers/*.xml"/>
+<!--        <property name="mapperLocations" value="classpath:mappers/*.xml"/>-->
     </bean>
 
     <!-- step4: 配置批量执行的sqlSession(可选操作) -->

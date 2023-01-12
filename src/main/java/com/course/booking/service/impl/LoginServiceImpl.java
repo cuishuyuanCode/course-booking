@@ -18,7 +18,7 @@ import java.io.IOException;
 public class LoginServiceImpl implements LoginService {
 
 
-    @Resource
+    @Resource(name = "captchaProducerMath")
     private Producer captchaProducerMath;
 
     /**

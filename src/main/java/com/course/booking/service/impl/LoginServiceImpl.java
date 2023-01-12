@@ -1,9 +1,10 @@
-package com.course.booking.service;
+package com.course.booking.service.impl;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
 import com.course.booking.common.entity.CacheConstants;
 import com.course.booking.common.response.AjaxResult;
+import com.course.booking.service.LoginService;
 import com.google.code.kaptcha.Producer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FastByteArrayOutputStream;

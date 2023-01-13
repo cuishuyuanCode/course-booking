@@ -8,7 +8,7 @@
     <Properties>
         <Property name="APP_NAME">rczp-ssm</Property>
         <!--设置日志文件存储路径为F:/workspace/log4j/${APP_NAME}-->
-        <Property name="LOG_FILE_PATH">C:/Users/320181933/IdeaProjects/CourseBooking/log/${APP_NAME}</Property>
+        <Property name="LOG_FILE_PATH">/Users/cuishuyuan/Desktop/log/${APP_NAME}</Property>
         <!--<Property name="LOG_FILE_PATH">./logs/${APP_NAME}</Property>-->
         <!--设置日志输出格式-->
         <Property name="PATTERN_FORMAT">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n</Property>

@@ -4,6 +4,7 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
 import com.course.booking.common.entity.CacheConstants;
 
+import com.course.booking.common.entity.security.SecurityConstants;
 import com.course.booking.common.entity.user.LoginUser;
 import com.course.booking.common.response.Result;
 import com.course.booking.common.utils.RedisUtils;
@@ -11,7 +12,10 @@ import com.course.booking.controller.dto.LoginDTO;
 import com.course.booking.controller.vo.CheckImageVO;
 import com.course.booking.controller.vo.LoginVO;
 import com.course.booking.service.LoginService;
+import com.course.booking.service.TokenService;
 import com.google.code.kaptcha.Producer;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,8 @@ import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -42,6 +48,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Resource
     private AuthenticationManager authenticationManager;
+
+    @Resource
+    private TokenService tokenService;
 
 
     /**
@@ -88,6 +97,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public Result<LoginVO> login(LoginDTO loginDTO) {
         logger.info("开始登录...");
+        LoginVO loginVO = null;
         //校验验证码
         boolean passFlag = checkImage(loginDTO);
         if (passFlag){
@@ -101,6 +111,10 @@ public class LoginServiceImpl implements LoginService {
                 return Result.failure("登录发生异常:"+e.getMessage());
             }
             LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+            String token = tokenService.createToken(loginUser);
+            loginVO = new LoginVO();
+            loginVO.setToken(token);
+            return Result.success(loginVO);
         }
         return Result.failure("请输入正确的验证码");
     }

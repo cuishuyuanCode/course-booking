@@ -45,11 +45,11 @@ public class SysUser {
     /** 最后登录时间 */
     private Date loginDate;
 
-    /** 部门对象 */
-    private SysDept dept;
-
-    /** 角色对象 */
-    private List<SysRole> roles;
+//    /** 部门对象 */
+//    private SysDept dept;
+//
+//    /** 角色对象 */
+//    private List<SysRole> roles;
 
     /** 角色组 */
     private Long[] roleIds;
@@ -210,25 +210,25 @@ public class SysUser {
         this.loginDate = loginDate;
     }
 
-    public SysDept getDept()
-    {
-        return dept;
-    }
-
-    public void setDept(SysDept dept)
-    {
-        this.dept = dept;
-    }
-
-    public List<SysRole> getRoles()
-    {
-        return roles;
-    }
-
-    public void setRoles(List<SysRole> roles)
-    {
-        this.roles = roles;
-    }
+//    public SysDept getDept()
+//    {
+//        return dept;
+//    }
+//
+//    public void setDept(SysDept dept)
+//    {
+//        this.dept = dept;
+//    }
+//
+//    public List<SysRole> getRoles()
+//    {
+//        return roles;
+//    }
+//
+//    public void setRoles(List<SysRole> roles)
+//    {
+//        this.roles = roles;
+//    }
 
     public Long[] getRoleIds()
     {
@@ -260,28 +260,28 @@ public class SysUser {
         this.roleId = roleId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-                .append("userId", getUserId())
-                .append("deptId", getDeptId())
-                .append("userName", getUserName())
-                .append("nickName", getNickName())
-                .append("email", getEmail())
-                .append("phonenumber", getPhonenumber())
-                .append("sex", getSex())
-                .append("avatar", getAvatar())
-                .append("password", getPassword())
-                .append("status", getStatus())
-                .append("delFlag", getDelFlag())
-                .append("loginIp", getLoginIp())
-                .append("loginDate", getLoginDate())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .append("remark", getRemark())
-                .append("dept", getDept())
-                .toString();
-    }
+//    @Override
+//    public String toString() {
+//        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+//                .append("userId", getUserId())
+//                .append("deptId", getDeptId())
+//                .append("userName", getUserName())
+//                .append("nickName", getNickName())
+//                .append("email", getEmail())
+//                .append("phonenumber", getPhonenumber())
+//                .append("sex", getSex())
+//                .append("avatar", getAvatar())
+//                .append("password", getPassword())
+//                .append("status", getStatus())
+//                .append("delFlag", getDelFlag())
+//                .append("loginIp", getLoginIp())
+//                .append("loginDate", getLoginDate())
+//                .append("createBy", getCreateBy())
+//                .append("createTime", getCreateTime())
+//                .append("updateBy", getUpdateBy())
+//                .append("updateTime", getUpdateTime())
+//                .append("remark", getRemark())
+//                .append("dept", getDept())
+//                .toString();
+//    }
 }

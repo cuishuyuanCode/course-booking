@@ -7,6 +7,18 @@
     <groupId>com.course.booking</groupId>
     <artifactId>course-booking</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <packaging>war</packaging>
 
     <name>course-booking</name>
@@ -19,6 +31,7 @@
         <mybatis.version>3.4.5</mybatis.version>
         <jackson.version>2.9.4</jackson.version>
         <kaptcha.version>2.3.3</kaptcha.version>
+        <fastjson.version>2.0.20</fastjson.version>
     </properties>
 
 
@@ -63,6 +76,17 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <!-- redis-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.3.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -166,6 +190,13 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring4</artifactId>
             <version>3.0.9.RELEASE</version>
+        </dependency>
+
+        <!-- 阿里json解析-->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
     <!--  <build>-->

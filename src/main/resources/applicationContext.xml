@@ -9,6 +9,8 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
+    <import resource="classpath:applicationRedis.xml"/>
+
     <!-- step1: 配置包扫描方式。扫描所有包，但是排除Controller层 -->
     <context:component-scan base-package="com.course.booking">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

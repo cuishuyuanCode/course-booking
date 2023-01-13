@@ -1,6 +1,7 @@
 package com.course.booking.controller;
 
-import com.course.booking.common.response.AjaxResult;
+import com.course.booking.common.response.Result;
+import com.course.booking.controller.vo.CheckImageVO;
 import com.course.booking.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ public class LoginController {
     private LoginService loginService;
 
     @GetMapping("/getCheckImage")
-    public AjaxResult getCheckImage(){
+    public Result<CheckImageVO> getCheckImage(){
         return loginService.getCheckImage();
     }
 }

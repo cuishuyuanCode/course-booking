@@ -4,16 +4,23 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
 import com.course.booking.common.entity.CacheConstants;
 
+import com.course.booking.common.entity.user.LoginUser;
 import com.course.booking.common.response.Result;
 import com.course.booking.common.utils.RedisUtils;
+import com.course.booking.controller.dto.LoginDTO;
 import com.course.booking.controller.vo.CheckImageVO;
+import com.course.booking.controller.vo.LoginVO;
 import com.course.booking.service.LoginService;
 import com.google.code.kaptcha.Producer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FastByteArrayOutputStream;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -32,6 +39,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    @Resource
+    private AuthenticationManager authenticationManager;
 
 
     /**
@@ -73,5 +83,36 @@ public class LoginServiceImpl implements LoginService {
         checkImageVO.setUuid(uuid);
         checkImageVO.setImageBase64Url(Base64.encode(os.toByteArray()));
         return Result.success("获取验证码成功", checkImageVO);
+    }
+
+    @Override
+    public Result<LoginVO> login(LoginDTO loginDTO) {
+        logger.info("开始登录...");
+        //校验验证码
+        boolean passFlag = checkImage(loginDTO);
+        if (passFlag){
+            // 用户验证
+            Authentication authentication = null;
+            try {
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
+//                AuthenticationContextHolder.setContext(authenticationToken);
+                authentication = authenticationManager.authenticate(authenticationToken);
+            }catch (Exception e){
+                return Result.failure("登录发生异常:"+e.getMessage());
+            }
+            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        }
+        return Result.failure("请输入正确的验证码");
+    }
+
+
+    private boolean checkImage(LoginDTO loginDTO) {
+        if (StringUtils.isEmpty(loginDTO.getUuid())){
+            return false;
+        }
+        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + loginDTO.getUuid();
+        Object captcha = redisUtils.getCacheObject(verifyKey);
+        redisUtils.deleteObject(verifyKey);
+        return captcha != null;
     }
 }

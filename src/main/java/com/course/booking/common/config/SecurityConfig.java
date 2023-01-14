@@ -4,24 +4,18 @@ package com.course.booking.common.config;
 import com.course.booking.common.entity.security.AuthenticationEntryPointImpl;
 import com.course.booking.common.entity.security.JwtAuthenticationTokenFilter;
 import com.course.booking.common.entity.security.LogoutSuccessHandlerImpl;
-import com.course.booking.common.entity.security.PermitAllUrlProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
@@ -60,11 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource(name = "corsFilter")
     private CorsFilter corsFilter;
 
-    /**
-     * 允许匿名访问的地址
-     */
-    @Resource
-    private PermitAllUrlProperties permitAllUrl;
 
 
     /**
@@ -98,9 +87,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception
     {
         // 注解标记允许匿名访问的url
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
+//        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
         //允许匿名访问的url
-        permitAllUrl.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
+//        permitAllUrl.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
 
         httpSecurity
                 // CSRF禁用，因为不使用session

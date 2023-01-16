@@ -16,7 +16,7 @@
         <!-- 一般在SpringMVC的配置里，只扫描Controller层，Spring配置中扫描所有包，但是排除Controller层。
         context:include-filter要注意，如果base-package扫描的不是最终包，那么其他包还是会扫描、加载，如果在SpringMVC的配置中这么做，会导致Spring不能处理事务，
         所以此时需要在<context:component-scan>标签上，增加use-default-filters="false"，就是真的只扫描context:include-filter包括的内容-->
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
     <!-- step2: 配置视图解析器 -->
@@ -25,9 +25,24 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+<!--    <mvc:cors>-->
+<!--        <mvc:mapping path="/**"-->
+<!--                     allowed-origins="*"-->
+<!--                     allowed-methods="GET,POST,PUT,POST,DELETE"-->
+<!--                     max-age="3600" />-->
+<!--    </mvc:cors>-->
+
     <!-- step3: 标准配置 -->
     <!-- 将springmvc不能处理的请求交给 spring 容器处理 -->
     <mvc:default-servlet-handler/>
     <!-- 简化注解配置，并提供更高级的功能 -->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven/>
+
+<!--    <mvc:cors>-->
+<!--        <mvc:mapping path="/**"-->
+<!--                     allowed-origin-patterns="*"-->
+<!--                     allowed-methods="POST, GET, OPTIONS, DELETE, PUT"-->
+<!--                     allowed-headers="Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"-->
+<!--                     allow-credentials="true"/>-->
+<!--    </mvc:cors>-->
 </beans>

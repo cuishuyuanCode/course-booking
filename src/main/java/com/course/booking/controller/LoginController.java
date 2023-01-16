@@ -6,20 +6,20 @@ import com.course.booking.controller.vo.CheckImageVO;
 import com.course.booking.controller.vo.LoginVO;
 import com.course.booking.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 
 @RestController
+@CrossOrigin(originPatterns = "*")
 public class LoginController {
 
 
-    @Autowired
+    @Resource
     private LoginService loginService;
 
-    @GetMapping("/getCheckImage")
+    @RequestMapping(method = RequestMethod.GET, value = "/getCheckImage")
     public Result<CheckImageVO> getCheckImage(){
         return loginService.getCheckImage();
     }

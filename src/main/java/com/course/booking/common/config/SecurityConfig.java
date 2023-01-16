@@ -4,12 +4,15 @@ package com.course.booking.common.config;
 import com.course.booking.common.entity.security.AuthenticationEntryPointImpl;
 import com.course.booking.common.entity.security.JwtAuthenticationTokenFilter;
 import com.course.booking.common.entity.security.LogoutSuccessHandlerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +23,8 @@ import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
 
-//@EnableWebSecurity
+@EnableWebSecurity
+@Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -51,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 跨域过滤器
      */
-    @Resource(name = "corsFilter")
+    @Autowired
     private CorsFilter corsFilter;
 
 

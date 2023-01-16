@@ -26,7 +26,9 @@
             <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <Filters>
                 <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+<!--                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
             </Filters>
 
             <PatternLayout>
@@ -46,6 +48,7 @@
     <Loggers>
         <Root level="info">
             <AppenderRef ref="applicationLog" />
+<!--            <AppenderRef ref="mybatis" />-->
             <AppenderRef ref="Console" />
             <AppenderRef ref="RollingInfoFile" />
         </Root>

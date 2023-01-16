@@ -2,20 +2,20 @@ package com.course.booking.service.impl;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
+import com.alibaba.fastjson2.JSONObject;
 import com.course.booking.common.entity.CacheConstants;
-
-import com.course.booking.common.entity.security.SecurityConstants;
 import com.course.booking.common.entity.user.LoginUser;
 import com.course.booking.common.response.Result;
 import com.course.booking.common.utils.RedisUtils;
 import com.course.booking.controller.dto.LoginDTO;
+import com.course.booking.controller.dto.RegisterDTO;
 import com.course.booking.controller.vo.CheckImageVO;
 import com.course.booking.controller.vo.LoginVO;
+import com.course.booking.dao.LoginMapper;
 import com.course.booking.service.LoginService;
 import com.course.booking.service.TokenService;
 import com.google.code.kaptcha.Producer;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +24,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FastByteArrayOutputStream;
-import org.springframework.util.StringUtils;
+
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -47,10 +46,7 @@ public class LoginServiceImpl implements LoginService {
     private RedisUtils redisUtils;
 
     @Resource
-    private AuthenticationManager authenticationManager;
-
-    @Resource
-    private TokenService tokenService;
+    private LoginMapper loginMapper;
 
 
     /**
@@ -86,7 +82,7 @@ public class LoginServiceImpl implements LoginService {
         try {
             ImageIO.write(image, "jpg", os);
         } catch (IOException e) {
-            logger.error("获取验证码信息异常:{}",e.getMessage());
+            logger.error("获取验证码信息异常:{}", e.getMessage());
             return Result.failure("获取验证码信息失败");
         }
         checkImageVO.setUuid(uuid);
@@ -100,28 +96,59 @@ public class LoginServiceImpl implements LoginService {
         LoginVO loginVO = null;
         //校验验证码
         boolean passFlag = checkImage(loginDTO);
-        if (passFlag){
-            // 用户验证
-            Authentication authentication = null;
-            try {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
-//                AuthenticationContextHolder.setContext(authenticationToken);
-                authentication = authenticationManager.authenticate(authenticationToken);
-            }catch (Exception e){
-                return Result.failure("登录发生异常:"+e.getMessage());
+        if (passFlag) {
+            Boolean userPass = loginMapper.loginCheck(loginDTO);
+            if (userPass) {
+                loginVO = new LoginVO();
+                loginVO.setLoginFlag(true);
+                return Result.success(loginVO);
+            } else {
+                return Result.failure("请检查用户名和密码");
             }
-            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-            String token = tokenService.createToken(loginUser);
-            loginVO = new LoginVO();
-            loginVO.setToken(token);
-            return Result.success(loginVO);
+//            // 用户验证
+//            Authentication authentication = null;
+//            try {
+//                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
+////                AuthenticationContextHolder.setContext(authenticationToken);
+//                authentication = authenticationManager.authenticate(authenticationToken);
+//            }catch (Exception e){
+//                return Result.failure("登录发生异常:"+e.getMessage());
+//            }
+//            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+//            String token = tokenService.createToken(loginUser);
+//            loginVO = new LoginVO();
+//            loginVO.setToken(token);
+//            return Result.success(loginVO);
         }
         return Result.failure("请输入正确的验证码");
     }
 
+    @Override
+    public Result<Boolean> register(RegisterDTO registerDTO) {
+        logger.info("开始注册...{}", JSONObject.toJSONString(registerDTO));
+        if (registerDTO == null){
+            return Result.failure("请检查传入信息");
+        }
+        if (StringUtils.isEmpty(registerDTO.getUsername()) || StringUtils.isEmpty(registerDTO.getPassword())) {
+            return Result.failure("请检查传入参数");
+        }
+        //1.查询用户名是否已经存在
+        Boolean existFlag = loginMapper.selectUser(registerDTO.getUsername());
+        if (existFlag){
+            return Result.failure("该用户已被注册，请更换用户名");
+        }
+        try {
+            loginMapper.insertUser(registerDTO);
+        }catch (Exception e){
+            logger.error("注册失败");
+            return Result.failure("注册失败，请稍后再试");
+        }
+        return Result.success(true);
+    }
+
 
     private boolean checkImage(LoginDTO loginDTO) {
-        if (StringUtils.isEmpty(loginDTO.getUuid())){
+        if (StringUtils.isEmpty(loginDTO.getUuid())) {
             return false;
         }
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + loginDTO.getUuid();

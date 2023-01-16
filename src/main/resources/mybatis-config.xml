@@ -6,6 +6,7 @@
     <settings>
         <!-- 开启驼峰命名规则 -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+<!--        <setting name="logImpl" value="LOG4J2"/>-->
     </settings>
     <plugins>
         <!-- 使用分页插件 -->

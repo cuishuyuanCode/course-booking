@@ -2,6 +2,7 @@ package com.course.booking.controller;
 
 import com.course.booking.common.response.Result;
 import com.course.booking.controller.dto.LoginDTO;
+import com.course.booking.controller.dto.RegisterDTO;
 import com.course.booking.controller.vo.CheckImageVO;
 import com.course.booking.controller.vo.LoginVO;
 import com.course.booking.service.LoginService;
@@ -27,5 +28,10 @@ public class LoginController {
     @PostMapping("/login")
     public Result<LoginVO> login(@RequestBody LoginDTO loginDTO){
         return loginService.login(loginDTO);
+    }
+
+    @PostMapping("/register")
+    public Result<Boolean> register(@RequestBody RegisterDTO registerDTO){
+        return loginService.register(registerDTO);
     }
 }

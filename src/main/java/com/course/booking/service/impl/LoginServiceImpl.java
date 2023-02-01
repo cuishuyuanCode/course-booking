@@ -105,20 +105,6 @@ public class LoginServiceImpl implements LoginService {
             } else {
                 return Result.failure("请检查用户名和密码");
             }
-//            // 用户验证
-//            Authentication authentication = null;
-//            try {
-//                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
-////                AuthenticationContextHolder.setContext(authenticationToken);
-//                authentication = authenticationManager.authenticate(authenticationToken);
-//            }catch (Exception e){
-//                return Result.failure("登录发生异常:"+e.getMessage());
-//            }
-//            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-//            String token = tokenService.createToken(loginUser);
-//            loginVO = new LoginVO();
-//            loginVO.setToken(token);
-//            return Result.success(loginVO);
         }
         return Result.failure("请输入正确的验证码");
     }

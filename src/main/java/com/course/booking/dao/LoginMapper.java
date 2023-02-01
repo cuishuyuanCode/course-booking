@@ -15,7 +15,7 @@ public interface LoginMapper {
     String selectDemo();
 
 
-    @Select("select count(*) = 1 from user where username = #{loginDTO.username}")
+    @Select("select count(*) = 1 from user where username = #{loginDTO.username} and password = #{loginDTO.password}")
     Boolean loginCheck(@Param("loginDTO") LoginDTO loginDTO);
 
     @Insert("insert into user(username,password) values (#{registerDTO.username},#{registerDTO.password})")

@@ -18,8 +18,8 @@ public class UserController {
 
 
     @GetMapping("/getUserInfo")
-    public Result<UserInfoVO> getUserInfo(@RequestBody GetUserInfoDTO userInfoDTO){
-        return Result.success(userService.getUserInfo(userInfoDTO));
+    public Result<UserInfoVO> getUserInfo(){
+        return Result.success(userService.getUserInfo());
     }
 
 }

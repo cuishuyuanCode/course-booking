@@ -15,12 +15,12 @@ public interface LoginMapper {
     String selectDemo();
 
 
-    @Select("select count(*) = 1 from user where username = #{loginDTO.username} and password = #{loginDTO.password}")
+    @Select("select count(*) = 1 from sys_user where user_name = #{loginDTO.username} and password = #{loginDTO.password}")
     Boolean loginCheck(@Param("loginDTO") LoginDTO loginDTO);
 
-    @Insert("insert into user(username,password) values (#{registerDTO.username},#{registerDTO.password})")
+    @Insert("insert into sys_user(username,password) values (#{registerDTO.username},#{registerDTO.password})")
     void insertUser(@Param("registerDTO") RegisterDTO registerDTO);
 
-    @Select("select count(1) >= 1 from user where username = #{username}")
+    @Select("select count(1) >= 1 from sys_user where user_name = #{username}")
     Boolean selectUser(@Param("username") String username);
 }

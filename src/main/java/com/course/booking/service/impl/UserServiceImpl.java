@@ -20,8 +20,9 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public UserInfoVO getUserInfo(GetUserInfoDTO getUserInfoDTO) {
+    public UserInfoVO getUserInfo() {
         log.info("开始查询用户信息");
-        return userMapper.getUserInfo(getUserInfoDTO);
+        return null;
+//        return userMapper.getUserInfo();
     }
 }

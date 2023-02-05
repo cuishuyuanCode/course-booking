@@ -6,5 +6,5 @@ import com.course.booking.controller.vo.UserInfoVO;
 public interface UserService {
 
 
-    UserInfoVO getUserInfo(GetUserInfoDTO getUserInfoDTO);
+    UserInfoVO getUserInfo();
 }

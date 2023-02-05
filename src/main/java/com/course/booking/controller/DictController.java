@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/system/dict/type")
+@RequestMapping("/system/dict/data")
 public class DictController {
 
 

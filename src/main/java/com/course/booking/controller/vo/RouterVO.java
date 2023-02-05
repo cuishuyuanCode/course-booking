@@ -56,7 +56,7 @@ public class RouterVO {
     private String icon;
 
     /** 子菜单 */
-//    private List<SysMenu> children = new ArrayList<SysMenu>();
+    private List<RouterVO> children = new ArrayList<RouterVO>();
 
     public Long getMenuId()
     {
@@ -227,5 +227,13 @@ public class RouterVO {
                 .append("perms", getPerms())
                 .append("icon", getIcon())
                 .toString();
+    }
+
+    public List<RouterVO> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<RouterVO> children) {
+        this.children = children;
     }
 }

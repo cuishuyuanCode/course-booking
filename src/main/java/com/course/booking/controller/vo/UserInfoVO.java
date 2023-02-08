@@ -60,7 +60,7 @@ public class UserInfoVO {
 //    private Long[] roleIds;
 
     /** 岗位组 */
-    private Long[] postIds;
+//    private Long[] postIds;
 
     /** 角色ID */
     private Long roleId;
@@ -216,16 +216,16 @@ public class UserInfoVO {
         this.loginDate = loginDate;
     }
 
-
-    public Long[] getPostIds()
-    {
-        return postIds;
-    }
-
-    public void setPostIds(Long[] postIds)
-    {
-        this.postIds = postIds;
-    }
+//
+//    public Long[] getPostIds()
+//    {
+//        return postIds;
+//    }
+//
+//    public void setPostIds(Long[] postIds)
+//    {
+//        this.postIds = postIds;
+//    }
 
     public Long getRoleId()
     {

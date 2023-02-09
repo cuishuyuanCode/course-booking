@@ -26,8 +26,8 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public TableDataInfo listUser(@RequestBody UserInfoVO userInfoVO){
-        return userService.listUser(userInfoVO);
+    public TableDataInfo listUser(){
+        return userService.listUser();
     }
 
 }

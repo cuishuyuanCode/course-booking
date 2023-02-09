@@ -10,5 +10,5 @@ public interface UserService {
     UserInfoVO getUserInfo();
 
 
-    TableDataInfo listUser(UserInfoVO userInfoVO);
+    TableDataInfo listUser();
 }

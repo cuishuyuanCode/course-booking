@@ -13,6 +13,15 @@ public class Result<T> implements Serializable {
 
     private T data;
 
+    private int total;
+
+
+    public Result(int code, String msg, T data, int total){
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+        this.total = total;
+    }
 
     public Result(int code, String msg, T data) {
         this.code = code;
@@ -55,6 +64,9 @@ public class Result<T> implements Serializable {
     public static <T> Result<T> success(T data) {
         return new Result<T>(HttpStatus.SUCCESS, "操作成功", data);
     }
+    public static <T> Result<T> success(T data,int total) {
+        return new Result<T>(HttpStatus.SUCCESS, "操作成功", data,total);
+    }
 
     //------------------------------------------------failure Response---------------------------------------------
     public static <T> Result<T> failure() {
@@ -90,4 +102,11 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 }

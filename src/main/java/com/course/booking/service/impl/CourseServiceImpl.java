@@ -22,6 +22,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result<List<CourseVO>> listCourse() {
         List<CourseVO> courseVOS = courseMapper.listCourse();
-        return Result.success(courseVOS);
+        return Result.success(courseVOS,courseVOS.size());
     }
 }
